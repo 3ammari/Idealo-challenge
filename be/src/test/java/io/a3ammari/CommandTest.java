@@ -10,8 +10,11 @@ public class CommandTest {
     @Test
     public void testForwardOutOfBound(){
         Position initial = new Position(1,1,Direction.NORTH);
-        Command cmd = new Forward(10);
-        Assertions.assertThrows(IllegalArgumentException.class,()->{cmd.execute(initial);});
+        Command tenStepForward = new Forward(10);
+        Assertions.assertThrows(IllegalArgumentException.class,()->{tenStepForward.execute(initial);});
+        Position facingEdge = new Position(5,1,Direction.EAST);
+        Command oneStepForward = new Forward(1);
+        Assertions.assertThrows(IllegalArgumentException.class,()-> oneStepForward.execute(facingEdge));
     }
 
 
