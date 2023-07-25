@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Idealo Challenge</title>
+  <style>
+    td {
+      border: 1px solid;
+      width: 50px;
+      height: 50px;
+      justify-items: center;
+      align-items: center;
+      vertical-align: middle;
+      display: table-cell;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    input[type="textarea"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #fff;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: #483285;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    function submitForm() {
+      let commands = document.querySelector('#inputTextarea').value;
+      let request = new XMLHttpRequest();
+      let onLoad = (event) => {
+        let response = '';
+        if (request.status == 400){
+          response = request.response;
+          console.log(`event : ${request.response}`);
+          alert(response);
+          return
+        }
+        response = JSON.parse(event.currentTarget.response);
+        let { x, y } = response;
+        let cellId = `cell-${y}-${x}`;
+        drawOnCell(cellId, response);
+      };
+      request.addEventListener("load", onLoad);
+ 
+      request.open("POST", "http://localhost:8080/evaluate");
+      request.setRequestHeader("Content-Type", "text/plain");
+      request.send(commands);
+    }
+
+    function drawOnCell(cellId, response) {
+      console.log(`drawing on cell (${cellId})`);
+      let x = response.x;
+      let y = response.y;
+      let direction = response.direction;
+      let cell = document.getElementById(cellId);
+
+      let east = "&#8594;";
+      let west = "&#8592;";
+      let north = "&#8593;";
+      let south = "&#8595;";
+
+      let arrows = { "NORTH": north, "EAST": east, "WEST": west, "SOUTH": south }
+      let element = document.createElement("p")
+      element.innerHTML = arrows[direction];
+      cell.appendChild(element);
+    }
+  </script>
+</head>
+
+
+
+<body>
+  <table class="form">
+    <tr>
+      <td id="cell-1-1"> </td>
+      <td id="cell-1-2"> </td>
+      <td id="cell-1-3"> </td>
+      <td id="cell-1-4"> </td>
+      <td id="cell-1-5"> </td>
+    </tr>
+    <tr>
+      <td id="cell-2-1"> </td>
+      <td id="cell-2-2"> </td>
+      <td id="cell-2-3"> </td>
+      <td id="cell-2-4"> </td>
+      <td id="cell-2-5"> </td>
+    </tr>
+    <tr>
+      <td id="cell-3-1"> </td>
+      <td id="cell-3-2"> </td>
+      <td id="cell-3-3"> </td>
+      <td id="cell-3-4"> </td>
+      <td id="cell-3-5"> </td>
+    </tr>
+    <tr>
+      <td id="cell-4-1"> </td>
+      <td id="cell-4-2"> </td>
+      <td id="cell-4-3"> </td>
+      <td id="cell-4-4"> </td>
+      <td id="cell-4-5"> </td>
+    </tr>
+    <tr>
+      <td id="cell-5-1"> </td>
+      <td id="cell-5-2"> </td>
+      <td id="cell-5-3"> </td>
+      <td id="cell-5-4"> </td>
+      <td id="cell-5-5"> </td>
+    </tr>
+  </table>
+  <div class="form">
+    <textarea id="inputTextarea" rows="10" placeholder="Enter your commands"></textarea>
+    <input type="submit" value="Submit" onclick="submitForm()">
+  </div>
+</body>
+
+</html>
