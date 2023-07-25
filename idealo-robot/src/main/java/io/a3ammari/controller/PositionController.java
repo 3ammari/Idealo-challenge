@@ -5,6 +5,7 @@ import io.a3ammari.model.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PositionController {
 
     private Logger logger = LoggerFactory.getLogger(PositionController.class);
+    @CrossOrigin
     @PostMapping("/evaluate")
     public ResponseEntity<Position> evaluateEndpoint(@RequestBody String commands){
         final String TAG = "evaluateEndpoint ";
