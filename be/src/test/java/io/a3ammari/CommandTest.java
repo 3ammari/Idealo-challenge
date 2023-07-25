@@ -23,6 +23,8 @@ public class CommandTest {
         Position initial = new Position(1,1,Direction.NORTH);
         Command cmd = new TurnAround();
         Position newPosition = cmd.execute(initial);
+        Assertions.assertSame(initial.x(),newPosition.y(),"Asserting y axis");
+        Assertions.assertSame(initial.y(),newPosition.y(),"Asserting x axis");
         Assertions.assertSame(newPosition.direction(),Direction.SOUTH);
     }
 
