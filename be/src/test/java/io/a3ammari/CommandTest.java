@@ -9,7 +9,7 @@ public class CommandTest {
 
     @Test
     public void testForwardOutOfBound(){
-        Position initial = new Position(0,0,Direction.NORTH);
+        Position initial = new Position(1,1,Direction.NORTH);
         Command cmd = new Forward(10);
         Assertions.assertThrows(IllegalArgumentException.class,()->{cmd.execute(initial);});
     }
