@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 @RestController
 public class PositionController {
 
     private Logger logger = LoggerFactory.getLogger(PositionController.class);
+
     @CrossOrigin
     @PostMapping("/evaluate")
-    public ResponseEntity<Position> evaluateEndpoint(@RequestBody String commands){
-        final String TAG = "evaluateEndpoint ";
-        logger.debug(TAG+commands);
-        Position position = new Position(1,1, Direction.EAST); //initial position
+    public ResponseEntity<Position> evaluateEndpoint(@RequestBody String commands) {
+        final String TAG = "evaluateEndpoint. ";
+        logger.debug(TAG + commands);
+        var position = new Position(1, 1, Direction.EAST); //initial position
         var lines = commands.lines().map(String::trim).toList();
-        logger.debug(TAG+ "number of lines = "+lines.size());
+        logger.debug(TAG + "number of lines = " + lines.size());
         var cmd = commands.lines().map(String::trim).map(Command::parse).toList();
-        for (Command c:
-             cmd) {
+        for (Command c :
+                cmd) {
             position = c.execute(position);
         }
         return ResponseEntity.ok(position);
