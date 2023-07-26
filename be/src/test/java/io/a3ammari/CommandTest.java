@@ -20,11 +20,11 @@ public class CommandTest {
 
     @Test
     public void testTurnAround(){
-        Position initial = new Position(1,1,Direction.NORTH);
+        Position initial = new Position(1,5,Direction.NORTH);
         Command cmd = new TurnAround();
         Position newPosition = cmd.execute(initial);
-        Assertions.assertSame(initial.x(),newPosition.y(),"Asserting y axis");
-        Assertions.assertSame(initial.y(),newPosition.y(),"Asserting x axis");
+        Assertions.assertSame(initial.y(),newPosition.y(),"Asserting y axis");
+        Assertions.assertSame(initial.x(),newPosition.x(),"Asserting x axis");
         Assertions.assertSame(newPosition.direction(),Direction.SOUTH);
     }
 
