@@ -1,4 +1,6 @@
 # docker build -t a3ammari/idealo-robot:latest .
+# docker run -e SERVICE_HTTP_PORT=80 -p 8080:80 -ti a3ammari/idealo-robot
+
 FROM maven
 
 RUN mkdir -p /build
