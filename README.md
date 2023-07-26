@@ -3,7 +3,7 @@
 Project is split to two modules
 
 - `be/`: backend module
-- `fe/`: front-end module
+- `fe/`: frontend module
 
 1. to start the app 
 ```bash
