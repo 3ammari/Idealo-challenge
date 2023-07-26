@@ -8,18 +8,24 @@ public sealed interface Command permits Init,Forward,TurnAround,Wait,Right,Left 
     static Command parse(String s){
         var parts = s.split(" ");
         return switch (parts[0]){
-            case "POSITION" ->
-                    //TODO: make sure to handle the IndexOutOfBoundException correctly
-                    new Init(
-                    new Position(
-                            Integer.parseInt(parts[1]),
-                            Integer.parseInt(parts[2]),
-                            Direction.valueOf(parts[3])
-                    )
-            );
-            case "FORWARD" ->
-                    //TODO: make sure to handle the IndexOutOfBoundException correctly
-                    new Forward(Integer.parseInt(parts[1]));
+            case "POSITION" -> {
+                if (parts.length < 4){
+                    throw new IllegalArgumentException("Missing arguments");
+                }
+                yield new Init(
+                        new Position(
+                                Integer.parseInt(parts[1]),
+                                Integer.parseInt(parts[2]),
+                                Direction.valueOf(parts[3])
+                        )
+                );
+            }
+            case "FORWARD" -> {
+                if (parts.length < 2) {
+                    throw new IllegalArgumentException("Missing arguments");
+                }
+                yield new Forward(Integer.parseInt(parts[1]));
+            }
             case "WAIT" -> new Wait();
             case "TURNAROUND" -> new TurnAround();
             case "LEFT" -> new Left();
